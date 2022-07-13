@@ -1,0 +1,127 @@
+{
+  "type": "modal",
+  "callback_id": "notify-sales-modal",
+  "title": {
+    "type": "plain_text",
+    "text": "Notify Sales"
+  },
+  "submit": {
+    "type": "plain_text",
+    "text": "Submit"
+  },
+  "close": {
+    "type": "plain_text",
+    "text": "Cancel",
+    "emoji": true
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Choose Action*"
+      }
+    },
+    {
+      "type": "actions",
+      "block_id": "static_select_action",
+      "elements": [
+        {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select an item",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Agent Ready for Website Build",
+                "emoji": true
+              },
+              "value": "agent-ready-for-website-build"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Agent Ready for Leads",
+                "emoji": true
+              },
+              "value": "agent-ready-for-leads"
+            }
+          ],
+          "action_id": "choose-action-notify-sales"
+        }
+      ]
+    },
+    {
+      "type": "input",
+      "block_id": "agent_first_name",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_first_name",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "John"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Firstname",
+        "emoji": true
+      }
+    },
+    {
+      "type": "input",
+      "block_id": "agent_last_name",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_last_name",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "Doe"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Lastname",
+        "emoji": true
+      }
+    },
+    {
+      "type": "input",
+      "block_id": "agent_email",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_email",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "john.doe@tradewind.co"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Email",
+        "emoji": true
+      }
+    },
+    {
+      "type": "input",
+      "block_id": "agent_phone",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_phone",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "+112344112"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Phone",
+        "emoji": true
+      }
+    }
+  ]
+}

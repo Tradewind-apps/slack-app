@@ -1,0 +1,59 @@
+{
+  "type": "modal",
+  "callback_id": "notify-sales-modal",
+  "title": {
+    "type": "plain_text",
+    "text": "Notify Sales"
+  },
+  "submit": {
+    "type": "plain_text",
+    "text": "Submit"
+  },
+  "close": {
+    "type": "plain_text",
+    "text": "Cancel",
+    "emoji": true
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Choose Action*"
+      }
+    },
+    {
+      "type": "actions",
+      "block_id": "static_select_action",
+      "elements": [
+        {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select an item",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Agent Ready for Website Build",
+                "emoji": true
+              },
+              "value": "agent-ready-for-website-build"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Agent Ready for Leads",
+                "emoji": true
+              },
+              "value": "agent-ready-for-leads"
+            }
+          ],
+          "action_id": "choose-action-notify-sales"
+        }
+      ]
+    }
+  ]
+}
