@@ -2,6 +2,8 @@ const selectActionView = require('../templates/sales-notify/select-action.json')
 const agentReadyForWebsiteBuildView = require('../templates/sales-notify/agent-ready-for-website-build.json');
 const agentReadyForLeadsView = require('../templates/sales-notify/agent-ready-for-leads.json');
 const {processmaker} = require('../wfe/processmaker');
+const {parseFields} = require('../form/formParser');
+const {fieldValidateEnum} = require('../form/fieldValidateEnum');
 
 const notifySalesOpenModal = async ({shortcut, ack, body, client, logger}) => {
   await ack();
@@ -41,34 +43,50 @@ const notifySalesLoadFields = async ({ack, body, client, action}) => {
 const handleFormSubmit = async ({ack, view}) => {
   await ack();
   const fields = parseFields(view.state.values);
+  let formHandler;
+  console.log(fields);
+  switch (fields['choose-action-notify-sales']) {
+    case 'agent-ready-for-website-build':
+      formHandler = agentReadyForWebsiteBuildHandler;
+      break;
+    case 'agent-ready-for-leads':
+      formHandler = agentReadyForLeadsHandler;
+      break;
+    default:
+      throw 'View ' + fields['choose-action-notify-sales'] + ' not found';
+  }
   try {
-    validateFields(fields)
-  }catch (error)
-  {
-
+    let result = formHandler(fields);
+  } catch (error) {
+    console.log(error);
   }
   // processmaker.createRequest(40,view.state);
 };
 
-const parseFields = (fields) => {
-  let parsed = {};
-  Object.values(fields).forEach((value, key) => {
-    parsed[Object.keys(value)[0]] = getValueFromInput(Object.values(value)[0]);
-  });
-
-  return parsed;
-};
-const getValueFromInput = (inputObj) => {
-  if (inputObj.value) {
-    return inputObj.value;
+const agentReadyForWebsiteBuildHandler = (fields) => {
+  //ValidateFields
+  let errors = [];
+  if (!fields.agent_phone.match(fieldValidateEnum.phone)) {
+    throw `Number ${fields.agent_phone} is not valid`;
   }
-  if (inputObj.selected_option && inputObj.selected_option.value) {
-    return inputObj.selected_option.value;
+
+  if (!fields.agent_email.match(fieldValidateEnum.email)) {
+    throw `Email ${fields.agent_email} is not valid`;
   }
-  return '';
+  return 'Valid';
 };
 
-const validateFields = () => {
+const agentReadyForLeadsHandler = (fields) => {
+  //ValidateFields
+  let errors = [];
+  if (!fields.agent_phone.match(fieldValidateEnum.phone)) {
+    throw `Number ${fields.agent_phone} is not valid`;
+  }
 
+  if (!fields.agent_email.match(fieldValidateEnum.email)) {
+    throw `Email ${fields.agent_email} is not valid`;
+  }
+  return 'Valid';
 };
+
 module.exports = {notifySalesOpenModal, notifySalesLoadFields, handleFormSubmit};

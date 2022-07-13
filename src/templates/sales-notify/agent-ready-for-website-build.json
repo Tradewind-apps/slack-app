@@ -54,6 +54,74 @@
           "action_id": "choose-action-notify-sales"
         }
       ]
+    },
+    {
+      "type": "input",
+      "block_id": "agent_first_name",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_first_name",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "John"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Firstname",
+        "emoji": true
+      }
+    },
+    {
+      "type": "input",
+      "block_id": "agent_last_name",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_last_name",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "Doe"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Lastname",
+        "emoji": true
+      }
+    },
+    {
+      "type": "input",
+      "block_id": "agent_email",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_email",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "john.doe@tradewind.co"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Email",
+        "emoji": true
+      }
+    },
+    {
+      "type": "input",
+      "block_id": "agent_phone",
+      "element": {
+        "type": "plain_text_input",
+        "action_id": "agent_phone",
+        "placeholder": {
+          "type": "plain_text",
+          "text": "+16308520397"
+        }
+      },
+      "label": {
+        "type": "plain_text",
+        "text": "Agent Phone",
+        "emoji": true
+      }
     }
   ]
 }
