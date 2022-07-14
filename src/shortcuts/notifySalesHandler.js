@@ -8,7 +8,7 @@ const {fieldValidateEnum} = require('../form/fieldValidateEnum');
 const notifySalesOpenModal = async ({shortcut, ack, body, client, logger}) => {
   await ack();
   try {
-    const result = await client.views.open({
+    await client.views.open({
       trigger_id: body.trigger_id,
       view: selectActionView,
     });
@@ -41,10 +41,10 @@ const notifySalesLoadFields = async ({ack, body, client, action}) => {
 };
 
 const handleFormSubmit = async ({ack, view}) => {
-  await ack();
+
   const fields = parseFields(view.state.values);
   let formHandler;
-  console.log(fields);
+
   switch (fields['choose-action-notify-sales']) {
     case 'agent-ready-for-website-build':
       formHandler = agentReadyForWebsiteBuildHandler;
@@ -57,36 +57,48 @@ const handleFormSubmit = async ({ack, view}) => {
   }
   try {
     let result = formHandler(fields);
+    await ack()
   } catch (error) {
     console.log(error);
+    await ack(error);
   }
-  // processmaker.createRequest(40,view.state);
 };
 
-const agentReadyForWebsiteBuildHandler = (fields) => {
+const  agentReadyForWebsiteBuildHandler = async (fields) => {
   //ValidateFields
-  let errors = [];
+  let errors = {};
+
   if (!fields.agent_phone.match(fieldValidateEnum.phone)) {
-    throw `Number ${fields.agent_phone} is not valid`;
+    errors.agent_phone = `Number ${fields.agent_phone} is not valid`;
   }
 
   if (!fields.agent_email.match(fieldValidateEnum.email)) {
-    throw `Email ${fields.agent_email} is not valid`;
+    errors.agent_email = `Email ${fields.agent_email} is not valid`;
   }
-  return 'Valid';
+
+  if (Object.keys(errors).length) {
+    throw {'response_action': 'errors', errors: errors};
+  }
+
+  processmaker.createRequest(40);
 };
 
 const agentReadyForLeadsHandler = (fields) => {
   //ValidateFields
-  let errors = [];
+  let errors = {};
+
   if (!fields.agent_phone.match(fieldValidateEnum.phone)) {
-    throw `Number ${fields.agent_phone} is not valid`;
+    errors.agent_phone = `Number ${fields.agent_phone} is not valid`;
   }
 
   if (!fields.agent_email.match(fieldValidateEnum.email)) {
-    throw `Email ${fields.agent_email} is not valid`;
+    errors.agent_email = `Email ${fields.agent_email} is not valid`;
   }
-  return 'Valid';
+
+  if (Object.keys(errors).length) {
+    throw {'response_action': 'errors', errors: errors};
+  }
+  processmaker.createRequest(40);
 };
 
 module.exports = {notifySalesOpenModal, notifySalesLoadFields, handleFormSubmit};
